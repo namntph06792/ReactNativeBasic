@@ -15,22 +15,21 @@ import {
 import Logo from '../components/Logo';
 
 
-export default class Login extends React.Component {
+export default class Register extends React.Component {
     
     static navigationOptions = {
         header : null,
         headerTruncatedBackTitle: "Logout" 
     }
-    
-    constructor(props){
+
+    constructor(props) {
         super(props);
 
         this.state = {
             navigation: this.props.navigation
         }
-
     }
-
+    
     render() {
         const {navigate} = this.props.navigation;
         return (
@@ -82,14 +81,14 @@ export default class Login extends React.Component {
                                     />
                                 </View>
 
-                                <TouchableOpacity style={styles.btnLogin} onPress={()=>{navigate("User")}}>
-                                    <Text style={styles.textButton}>Sign In</Text>
+                                <TouchableOpacity style={styles.btnRegister} onPress={()=>{navigate("Login")}}>
+                                    <Text style={styles.textButton}>Sign Up</Text>
                                 </TouchableOpacity>
                             </View>
-                            <View style={styles.signup}>
+                            <View style={styles.signin}>
                                 <Text style={styles.text}>
-                                    Don't have an account ?
-                                    <Text style={{ color: "blue" }} onPress={() => {navigate("Register")}}>Sign up</Text>
+                                    Already have an account ?
+                                    <Text style={{ color: "blue" }} onPress={() => {navigate("Login")}}>Login</Text>
                                 </Text>
                             </View>
                         </View>
@@ -150,7 +149,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         paddingHorizontal: 10
     },
-    btnLogin: {
+    btnRegister: {
         backgroundColor: "green",
         paddingVertical: 15,
         width: 250
@@ -161,7 +160,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: "rgb(32,53,70)"
     },
-    signup: {
+    signin: {
         position: "absolute",
         bottom: 10,
         flex: 1,
