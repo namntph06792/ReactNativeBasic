@@ -2,11 +2,11 @@ import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
     container: {
-            flex: 1,
-            flexDirection: "column",
-            backgroundColor: "rgb(32,53,78)",
-            justifyContent: "center"
-        },
+        flex: 1,
+        flexDirection: "column",
+        backgroundColor: "rgb(32,53,78)",
+        justifyContent: "center"
+    },
     header: {
         position: "absolute",
         left: 0,
@@ -89,4 +89,8 @@ export default StyleSheet.create({
         justifyContent: "center",
         width: "100%"
     },
+    error: {
+        borderWidth: 3,
+        borderColor: 'red',
+    }
 });
