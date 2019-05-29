@@ -53,7 +53,8 @@ export default StyleSheet.create({
     btnLogin: {
         backgroundColor: "green",
         paddingVertical: 15,
-        width: 250
+        width: 250,
+        marginTop: 5
     },
     textButton: {
         textAlign: "center",
@@ -92,5 +93,19 @@ export default StyleSheet.create({
     error: {
         borderWidth: 3,
         borderColor: 'red',
+    },
+    //UserHeader
+    userHeader: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    button: {
+        flex: 0.5,
+    },
+    image: {
+        width: 35,
+        height: 35,
     }
 });

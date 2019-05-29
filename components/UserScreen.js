@@ -6,14 +6,20 @@ import {
 import {
   Container
 } from "native-base";
-// import UserHeader from "../components/UserHeader";
-import UserContent from "../components/UserContent";
-import UserFooter from "../components/UserFooter";
+import UserHeader from "./UserHeader";
+import UserContent from "./UserContent";
+import UserFooter from "./UserFooter";
 
-export default class User extends Component {
+export default class UserScreen extends Component {
   static navigationOptions = {
-    title: "User",
-    headerRight:(
+    headerTitle: (
+      <Image 
+        resizeMethod='cover'
+        source={require('../assets/react-native-logo.png')}
+        style={{width: 30,height: 30,resizeMode: 'contain',alignSelf: 'center'}}
+      />
+    ),
+    headerRight: (
       <TouchableOpacity activeOpacity={0.5}>
         <Image
           source={require('../assets/hamburger.png')}
@@ -28,7 +34,7 @@ export default class User extends Component {
     const { navigate } = this.props.navigation;
     return (
       <Container>
-        {/* <UserHeader/> */}
+        <UserHeader/>
         <UserContent/>
         <UserFooter/>
       </Container>

@@ -14,68 +14,78 @@ import {
 import {
     showMessage,
 } from 'react-native-flash-message';
-import FlashMessage from "react-native-flash-message";
-import Logo from '../components/Logo';
+import Logo from './Logo';
 import styles from '../src/styles';
-import { firebaseApp } from '../components/FirebaseConfig';
+import { firebaseApp } from './FirebaseConfig';
+import FlashMessage from "react-native-flash-message";
 
-export default class Login extends React.Component {
+export default class RegisterScreen extends React.Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
             email: '',
             password: '',
+            re_password: '',
         }
     }
     static navigationOptions = {
         header: null,
-        headerTruncatedBackTitle: "Logout"
     }
 
-    login(){
-        firebaseApp.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
-            .then(() =>{
-                showMessage({
+    register() {
+        firebaseApp.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+            .then(() => {
+                this.refs.register.showMessage({
                     message: 'Success',
-                    description: 'Login Successful, Welcome : ' + this.state.email,
+                    description: 'Register Successful : ' + this.state.email,
                     type: 'success',
                     onPress: () => {
-                        this.props.navigation.navigate("User");
+                        this.props.navigation.navigate("Login")
                     }
                 });
+                this.setState({
+                    email: '',
+                    password: '',
+
+                })
             })
             .catch(function (error) {
-            
+
             });
     }
 
-    validate(){
+    validate() {
         space = /^\s*$/;
         regE = /\w+@\w+(\.\w+){1,2}/;
         regP = /\w{5,}/;
-        const { email, password } = this.state;
+        const { email, password, re_password } = this.state;
         if (space.test(email)) {
-            showMessage({
+            this.refs.register.showMessage({
                 message: 'Error',
                 description: 'Email can not be empty !',
                 type: 'warning',
             });
         } else if (!regE.test(email)) {
-            showMessage({
+            this.refs.register.showMessage({
                 message: 'Error',
                 description: 'Please fill the correct email format !',
                 type: 'warning',
             });
         } else if (space.test(password) || !regP.test(password)) {
-            showMessage({
+            this.refs.register.showMessage({
                 message: 'Error',
                 description: 'Password can not be empty and at least 5 characters !',
                 type: 'warning',
             });
+        } else if (re_password != password) {
+            this.refs.register.showMessage({
+                message: 'Error',
+                description: 'Password not match !',
+                type: 'warning',
+            });
         } else {
-            this.login();
+            this.register();
         }
     }
 
@@ -84,6 +94,7 @@ export default class Login extends React.Component {
         return (
             <SafeAreaView style={styles.container}>
                 <StatusBar barStyle="light-content" />
+
                 <KeyboardAvoidingView behavior="padding" style={styles.container}>
                     <TouchableWithoutFeedback
                         style={styles.container}
@@ -97,7 +108,7 @@ export default class Login extends React.Component {
                                 />
                             </View>
                             <Logo />
-                            <FlashMessage position='top' hideOnPress={true} autoHide={false} animated={true}/>
+                            <FlashMessage ref='register' position='top' hideOnPress={true} autoHide={false} animated={true}/>
                             <View style={styles.loginInfo}>
                                 <View style={styles.loginInfoSection}>
                                     <Image
@@ -130,19 +141,39 @@ export default class Login extends React.Component {
                                         secureTextEntry={true}
                                         autoCorrect={false}
                                         ref={input => (this.password = input)}
+                                        onSubmitEditing={() => this.re_password.focus()}
                                         onChangeText={(password) => this.setState({ password })}
                                         value={this.state.password}
                                     />
                                 </View>
 
-                                <TouchableOpacity style={styles.btnLogin} onPress={() => this.validate()}>
-                                    <Text style={styles.textButton}>Sign In</Text>
+                                <View style={styles.loginInfoSection}>
+                                    <Image
+                                        source={require("../assets/pass.png")}
+                                        style={styles.inputImage}
+                                    />
+                                    <TextInput
+                                        style={styles.input}
+                                        placeholder="Password"
+                                        placeholderTextColor="rgba(255,255,255,0.8)"
+                                        keyboardType="email-address"
+                                        returnKeyType="go"
+                                        secureTextEntry={true}
+                                        autoCorrect={false}
+                                        ref={input => (this.re_password = input)}
+                                        onChangeText={(re_password) => this.setState({ re_password })}
+                                        value={this.state.re_password}
+                                    />
+                                </View>
+
+                                <TouchableOpacity style={styles.btnRegister} onPress={() => { this.validate() }}>
+                                    <Text style={styles.textButton}>Sign Up</Text>
                                 </TouchableOpacity>
                             </View>
-                            <View style={styles.signup}>
+                            <View style={styles.signin}>
                                 <Text style={styles.text}>
-                                    Don't have an account ?
-                                        <Text style={{ color: "blue" }} onPress={() => { navigate("Register") }}> Sign up </Text>
+                                    Already have an account ?
+                                    <Text style={{ color: "blue" }} onPress={() => { navigate("Login") }}> Login </Text>
                                 </Text>
                             </View>
                         </View>
