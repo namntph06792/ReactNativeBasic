@@ -6,7 +6,7 @@ import {
 import {
   Container
 } from "native-base";
-import UserHeader from "./UserHeader";
+// import UserHeader from "./UserHeader";
 import UserContent from "./UserContent";
 import UserFooter from "./UserFooter";
 
@@ -14,9 +14,8 @@ export default class UserScreen extends Component {
   static navigationOptions = {
     headerTitle: (
       <Image 
-        resizeMethod='cover'
         source={require('../assets/react-native-logo.png')}
-        style={{width: 30,height: 30,resizeMode: 'contain',alignSelf: 'center'}}
+        style={{width: 30,height: 30}}
       />
     ),
     headerRight: (
@@ -34,7 +33,6 @@ export default class UserScreen extends Component {
     const { navigate } = this.props.navigation;
     return (
       <Container>
-        <UserHeader/>
         <UserContent/>
         <UserFooter/>
       </Container>

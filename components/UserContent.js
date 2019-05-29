@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import {
-    Content
-} from "native-base";
-import UserContentItem from "../components/UserContentItem";
+import { View,FlatList } from 'react-native';
+import { Content } from "native-base";
+import UserContentHeader from "../components/UserContentHeader";
+import styles from '../src/styles';
 
 export default class UserContent extends Component {
     render() {
         return (
             <Content>
-                <UserContentItem/>
-                <UserContentItem/>
+                <UserContentHeader/>
+                <FlatList></FlatList>
             </Content>
         );
     }

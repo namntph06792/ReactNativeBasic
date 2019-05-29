@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Image } from 'react-native';
 import {
     Footer,
     FooterTab,
@@ -11,12 +10,7 @@ import {
 import UserHeader from "../components/UserHeader";
 
 export default class UserFooter extends Component {
-    constructor(props){
-        super(props);
-        this.state={
-            
-        }
-    }
+    
     render() {
         return (
             <Footer>
@@ -25,7 +19,7 @@ export default class UserFooter extends Component {
                         <Badge>
                             <Text>2</Text>
                         </Badge>
-                        <Icon name="apps" onPress={alert(this.props.name)} />
+                        <Icon name="apps"/>
                         <Text>Apps</Text>
                     </Button>
                     <Button vertical>

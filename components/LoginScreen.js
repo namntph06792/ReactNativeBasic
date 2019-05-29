@@ -60,31 +60,32 @@ export default class LoginScreen extends React.Component {
     }
 
     validate() {
-        space = /^\s*$/;
-        regE = /\w+@\w+(\.\w+){1,2}/;
-        regP = /\w{5,}/;
-        const { email, password } = this.state;
-        if (space.test(email)) {
-            this.refs.login.showMessage({
-                message: 'Error',
-                description: 'Email can not be empty !',
-                type: 'warning',
-            });
-        } else if (!regE.test(email)) {
-            this.refs.login.showMessage({
-                message: 'Error',
-                description: 'Please fill the correct email format !',
-                type: 'warning',
-            });
-        } else if (space.test(password) || !regP.test(password)) {
-            this.refs.login.showMessage({
-                message: 'Error',
-                description: 'Password can not be empty and at least 5 characters !',
-                type: 'warning',
-            });
-        } else {
-            this.login();
-        }
+        // space = /^\s*$/;
+        // regE = /\w+@\w+(\.\w+){1,2}/;
+        // regP = /\w{5,}/;
+        // const { email, password } = this.state;
+        // if (space.test(email)) {
+        //     this.refs.login.showMessage({
+        //         message: 'Error',
+        //         description: 'Email can not be empty !',
+        //         type: 'warning',
+        //     });
+        // } else if (!regE.test(email)) {
+        //     this.refs.login.showMessage({
+        //         message: 'Error',
+        //         description: 'Please fill the correct email format !',
+        //         type: 'warning',
+        //     });
+        // } else if (space.test(password) || !regP.test(password)) {
+        //     this.refs.login.showMessage({
+        //         message: 'Error',
+        //         description: 'Password can not be empty and at least 5 characters !',
+        //         type: 'warning',
+        //     });
+        // } else {
+        //     this.login();
+        // }
+        this.props.navigation.navigate("User");
     }
 
     toggleSwitch(){

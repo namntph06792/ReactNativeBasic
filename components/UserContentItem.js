@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { 
     Image,
-    StyleSheet
  } from 'react-native';
 import {
     Left,
@@ -14,6 +13,7 @@ import {
     Icon,
     Text,
 } from "native-base";
+import styles from '../src/styles';
 
 export default class UserContentItem extends Component {
     render() {
@@ -52,11 +52,3 @@ export default class UserContentItem extends Component {
         );
     }
 }
-
-const styles = StyleSheet.create({
-    item: {
-        marginTop: 10,
-        marginBottom: 10,
-        borderRadius: 10,
-    },
-});

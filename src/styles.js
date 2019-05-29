@@ -100,12 +100,22 @@ export default StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
+        height: 30
     },
     button: {
         flex: 0.5,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     image: {
-        width: 35,
-        height: 35,
-    }
+        width: 20,
+        height: 20,
+    },
+    //UserContentItem
+    item: {
+        marginTop: 0,
+        marginBottom: 10,
+        borderRadius: 10,
+    },
 });
