@@ -5,7 +5,8 @@ export default StyleSheet.create({
         flex: 1,
         flexDirection: "column",
         backgroundColor: "rgb(32,53,78)",
-        justifyContent: "center"
+        justifyContent: "center",
+        minHeight: 720,
     },
     header: {
         position: "absolute",
@@ -118,4 +119,11 @@ export default StyleSheet.create({
         marginBottom: 10,
         borderRadius: 10,
     },
+    //LoginScreen
+    btnEye: {
+        opacity: 0.5,
+        position: 'absolute',
+        top: 6,
+        right: 5 
+    }
 });

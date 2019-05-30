@@ -13,6 +13,7 @@ export default class Logo extends React.Component {
     }
 
     render(){
+        const { navigate } = this.props.nav;
         return(
             <View style={{ alignItems: "center", justifyContent: "center" }}>
                 <TouchableHighlight
@@ -26,7 +27,7 @@ export default class Logo extends React.Component {
                         alignItems: "center"
                     }}
                     underlayColor="#ccc"
-                    onPress={() => {this.renderCamera()} 
+                    onPress={() => {navigate("SetCamera")} 
                     }>
                     <Image source={require("../assets/avatar.png")} />
                 </TouchableHighlight>

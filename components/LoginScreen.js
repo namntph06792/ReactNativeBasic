@@ -1,5 +1,6 @@
 import React from "react";
 import {
+    ScrollView,
     View,
     Image,
     Text,
@@ -12,6 +13,7 @@ import {
     TouchableOpacity,
     Switch,
 } from "react-native";
+import { Icon } from 'native-base';
 import {
     showMessage,
 } from 'react-native-flash-message';
@@ -29,6 +31,8 @@ export default class LoginScreen extends React.Component {
             email: '',
             password: '',
             switchValue: false,
+            showPassword: true,
+            press: false
         }
     }
     static navigationOptions = {
@@ -43,7 +47,7 @@ export default class LoginScreen extends React.Component {
                     message: 'Success',
                     description: 'Login Successful, Welcome : ' + this.state.email,
                     type: 'success',
-                    onPress: () => this.userPermissions(this.state.email,this.state.password)
+                    onPress: () => this.userPermissions(this.state.email, this.state.password)
                 });
             })
             .catch(function (error) {
@@ -51,10 +55,10 @@ export default class LoginScreen extends React.Component {
             });
     }
 
-    userPermissions(e,p){
-        if(e == 'itachi1611@gmail.com' && p == '123456'){
+    userPermissions(e, p) {
+        if (e == 'itachi1611@gmail.com' && p == '123456') {
             this.props.navigation.navigate("ListPost");
-        }else{
+        } else {
             this.props.navigation.navigate("User");
         }
     }
@@ -88,7 +92,16 @@ export default class LoginScreen extends React.Component {
         this.props.navigation.navigate("User");
     }
 
-    toggleSwitch(){
+    showPass = () => {
+        if (this.state.press == false) {
+            this.setState({ showPassword: false, press: true })
+        }
+        else {
+            this.setState({ showPassword: true, press: false })
+        }
+    }
+        
+    toggleSwitch() {
         this.setState({
             switchValue: !this.state.switchValue,
         })
@@ -98,82 +111,87 @@ export default class LoginScreen extends React.Component {
     render() {
         const { navigate } = this.props.navigation;
         return (
-            <SafeAreaView style={styles.container}>
-                <StatusBar barStyle="light-content" />
-                <KeyboardAvoidingView behavior="padding" style={styles.container}>
-                    <TouchableWithoutFeedback
-                        style={styles.container}
-                        onPress={Keyboard.dismiss}>
+            <ScrollView horizontal={false}>
+                <SafeAreaView style={styles.container}>
+                    <StatusBar barStyle="light-content" />
+                    <KeyboardAvoidingView behavior="padding" style={styles.container}>
+                        <TouchableWithoutFeedback
+                            style={styles.container}
+                            onPress={Keyboard.dismiss}>
 
-                        <View style={styles.container}>
-                            <View style={styles.header}>
-                                <Image
-                                    style={styles.logo}
-                                    source={require("../assets/welcome.png")}
-                                />
-                            </View>
-                            <Logo />
-                            <FlashMessage ref='login' position='top' hideOnPress={true} autoHide={false} animated={true} />
-                            <View style={styles.loginInfo}>
-                                <View style={styles.loginInfoSection}>
+                            <View style={styles.container}>
+                                <View style={styles.header}>
                                     <Image
-                                        source={require("../assets/mail.png")}
-                                        style={styles.inputImage}
-                                    />
-                                    <TextInput
-                                        style={styles.input}
-                                        placeholder="Email address"
-                                        placeholderTextColor="rgba(255,255,255,0.8)"
-                                        keyboardType="email-address"
-                                        returnKeyType="next"
-                                        autoCorrect={false}
-                                        onSubmitEditing={() => this.password.focus()}
-                                        onChangeText={(email) => this.setState({ email })}
-                                        value={this.state.email}
+                                        style={styles.logo}
+                                        source={require("../assets/welcome.png")}
                                     />
                                 </View>
-                                <View style={styles.loginInfoSection}>
-                                    <Image
-                                        source={require("../assets/pass.png")}
-                                        style={styles.inputImage}
-                                    />
-                                    <TextInput
-                                        style={styles.input}
-                                        placeholder="Password"
-                                        placeholderTextColor="rgba(255,255,255,0.8)"
-                                        keyboardType="email-address"
-                                        returnKeyType="go"
-                                        secureTextEntry={true}
-                                        autoCorrect={false}
-                                        ref={input => (this.password = input)}
-                                        onChangeText={(password) => this.setState({ password })}
-                                        value={this.state.password}
-                                    />
-                                </View>
+                                <Logo nav={this.props.navigation}/>
+                                <FlashMessage ref='login' position='top' hideOnPress={true} autoHide={false} animated={true} />
+                                <View style={styles.loginInfo}>
+                                    <View style={styles.loginInfoSection}>
+                                        <Image
+                                            source={require("../assets/mail.png")}
+                                            style={styles.inputImage}
+                                        />
+                                        <TextInput
+                                            style={styles.input}
+                                            placeholder="Email address"
+                                            placeholderTextColor="rgba(255,255,255,0.8)"
+                                            keyboardType="email-address"
+                                            returnKeyType="next"
+                                            autoCorrect={false}
+                                            onSubmitEditing={() => this.password.focus()}
+                                            onChangeText={(email) => this.setState({ email })}
+                                            value={this.state.email}
+                                        />
+                                    </View>
+                                    <View style={styles.loginInfoSection}>
+                                        <Image
+                                            source={require("../assets/pass.png")}
+                                            style={styles.inputImage}
+                                        />
+                                        <TextInput
+                                            style={styles.input}
+                                            placeholder="Password"
+                                            placeholderTextColor="rgba(255,255,255,0.8)"
+                                            keyboardType="email-address"
+                                            returnKeyType="go"
+                                            secureTextEntry={this.state.showPassword}
+                                            autoCorrect={false}
+                                            ref={input => (this.password = input)}
+                                            onChangeText={(password) => this.setState({ password })}
+                                            value={this.state.password}
+                                        />
+                                        <TouchableOpacity onPress={this.showPass.bind(this)} style={styles.btnEye} >
+                                            <Icon active name={'eye'} />
+                                        </TouchableOpacity>
+                                    </View>
 
-                                <View style={styles.loginInfoSection}>
-                                    <Switch 
-                                        onValueChange={() => this.toggleSwitch()} 
-                                        value={this.state.switchValue}
-                                        style={{transform: [{scaleX: .5},{scaleY: .5}],textAlign: 'left'}}
-                                    />
-                                    <Text>Remember me</Text>
-                                </View>
+                                    <View style={styles.loginInfoSection}>
+                                        <Switch
+                                            onValueChange={() => this.toggleSwitch()}
+                                            value={this.state.switchValue}
+                                            style={{ transform: [{ scaleX: .5 }, { scaleY: .5 }], textAlign: 'left' }}
+                                        />
+                                        <Text>Remember me</Text>
+                                    </View>
 
-                                <TouchableOpacity style={styles.btnLogin} onPress={() => this.validate()}>
-                                    <Text style={styles.textButton}>Sign In</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.signup}>
-                                <Text style={styles.text}>
-                                    Don't have an account ?
+                                    <TouchableOpacity style={styles.btnLogin} onPress={() => this.validate()}>
+                                        <Text style={styles.textButton}>Sign In</Text>
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={styles.signup}>
+                                    <Text style={styles.text}>
+                                        Don't have an account ?
                                         <Text style={{ color: "blue" }} onPress={() => { navigate("Register") }}> Sign up </Text>
-                                </Text>
+                                    </Text>
+                                </View>
                             </View>
-                        </View>
-                    </TouchableWithoutFeedback>
-                </KeyboardAvoidingView>
-            </SafeAreaView>
+                        </TouchableWithoutFeedback>
+                    </KeyboardAvoidingView>
+                </SafeAreaView>
+            </ScrollView>
         );
     }
 }

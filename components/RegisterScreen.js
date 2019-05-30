@@ -1,5 +1,6 @@
 import React from "react";
 import {
+    ScrollView,
     View,
     Image,
     Text,
@@ -11,6 +12,7 @@ import {
     Keyboard,
     TouchableOpacity,
 } from "react-native";
+import { Icon } from 'native-base';
 import {
     showMessage,
 } from 'react-native-flash-message';
@@ -27,6 +29,8 @@ export default class RegisterScreen extends React.Component {
             email: '',
             password: '',
             re_password: '',
+            showPassword: true,
+            press: false
         }
     }
     static navigationOptions = {
@@ -89,97 +93,114 @@ export default class RegisterScreen extends React.Component {
         }
     }
 
+    showPass = () => {
+        if (this.state.press == false) {
+            this.setState({ showPassword: false, press: true })
+        }
+        else {
+            this.setState({ showPassword: true, press: false })
+        }
+    }
+
     render() {
         const { navigate } = this.props.navigation;
         return (
-            <SafeAreaView style={styles.container}>
-                <StatusBar barStyle="light-content" />
+            <ScrollView>
+                <SafeAreaView style={styles.container}>
+                    <StatusBar barStyle="light-content" />
 
-                <KeyboardAvoidingView behavior="padding" style={styles.container}>
-                    <TouchableWithoutFeedback
-                        style={styles.container}
-                        onPress={Keyboard.dismiss}>
+                    <KeyboardAvoidingView behavior="padding" style={styles.container}>
+                        <TouchableWithoutFeedback
+                            style={styles.container}
+                            onPress={Keyboard.dismiss}>
 
-                        <View style={styles.container}>
-                            <View style={styles.header}>
-                                <Image
-                                    style={styles.logo}
-                                    source={require("../assets/welcome.png")}
-                                />
-                            </View>
-                            <Logo />
-                            <FlashMessage ref='register' position='top' hideOnPress={true} autoHide={false} animated={true}/>
-                            <View style={styles.loginInfo}>
-                                <View style={styles.loginInfoSection}>
+                            <View style={styles.container}>
+                                <View style={styles.header}>
                                     <Image
-                                        source={require("../assets/mail.png")}
-                                        style={styles.inputImage}
-                                    />
-                                    <TextInput
-                                        style={styles.input}
-                                        placeholder="Email address"
-                                        placeholderTextColor="rgba(255,255,255,0.8)"
-                                        keyboardType="email-address"
-                                        returnKeyType="next"
-                                        autoCorrect={false}
-                                        onSubmitEditing={() => this.password.focus()}
-                                        onChangeText={(email) => this.setState({ email })}
-                                        value={this.state.email}
+                                        style={styles.logo}
+                                        source={require("../assets/welcome.png")}
                                     />
                                 </View>
-                                <View style={styles.loginInfoSection}>
-                                    <Image
-                                        source={require("../assets/pass.png")}
-                                        style={styles.inputImage}
-                                    />
-                                    <TextInput
-                                        style={styles.input}
-                                        placeholder="Password"
-                                        placeholderTextColor="rgba(255,255,255,0.8)"
-                                        keyboardType="email-address"
-                                        returnKeyType="go"
-                                        secureTextEntry={true}
-                                        autoCorrect={false}
-                                        ref={input => (this.password = input)}
-                                        onSubmitEditing={() => this.re_password.focus()}
-                                        onChangeText={(password) => this.setState({ password })}
-                                        value={this.state.password}
-                                    />
-                                </View>
+                                <Logo nav={this.props.navigation}/>
+                                <FlashMessage ref='register' position='top' hideOnPress={true} autoHide={false} animated={true} />
+                                <View style={styles.loginInfo}>
+                                    <View style={styles.loginInfoSection}>
+                                        <Image
+                                            source={require("../assets/mail.png")}
+                                            style={styles.inputImage}
+                                        />
+                                        <TextInput
+                                            style={styles.input}
+                                            placeholder="Email address"
+                                            placeholderTextColor="rgba(255,255,255,0.8)"
+                                            keyboardType="email-address"
+                                            returnKeyType="next"
+                                            autoCorrect={false}
+                                            onSubmitEditing={() => this.password.focus()}
+                                            onChangeText={(email) => this.setState({ email })}
+                                            value={this.state.email}
+                                        />
+                                    </View>
+                                    <View style={styles.loginInfoSection}>
+                                        <Image
+                                            source={require("../assets/pass.png")}
+                                            style={styles.inputImage}
+                                        />
+                                        <TextInput
+                                            style={styles.input}
+                                            placeholder="Password"
+                                            placeholderTextColor="rgba(255,255,255,0.8)"
+                                            keyboardType="email-address"
+                                            returnKeyType="go"
+                                            secureTextEntry={this.state.showPassword}
+                                            autoCorrect={false}
+                                            ref={input => (this.password = input)}
+                                            onSubmitEditing={() => this.re_password.focus()}
+                                            onChangeText={(password) => this.setState({ password })}
+                                            value={this.state.password}
+                                        />
+                                        <TouchableOpacity onPress={this.showPass.bind(this)} style={styles.btnEye} >
+                                            <Icon active name={'eye'} />
+                                        </TouchableOpacity>
+                                    </View>
 
-                                <View style={styles.loginInfoSection}>
-                                    <Image
-                                        source={require("../assets/pass.png")}
-                                        style={styles.inputImage}
-                                    />
-                                    <TextInput
-                                        style={styles.input}
-                                        placeholder="Password"
-                                        placeholderTextColor="rgba(255,255,255,0.8)"
-                                        keyboardType="email-address"
-                                        returnKeyType="go"
-                                        secureTextEntry={true}
-                                        autoCorrect={false}
-                                        ref={input => (this.re_password = input)}
-                                        onChangeText={(re_password) => this.setState({ re_password })}
-                                        value={this.state.re_password}
-                                    />
-                                </View>
+                                    <View style={styles.loginInfoSection}>
+                                        <Image
+                                            source={require("../assets/pass.png")}
+                                            style={styles.inputImage}
+                                        />
+                                        <TextInput
+                                            style={styles.input}
+                                            placeholder="Password"
+                                            placeholderTextColor="rgba(255,255,255,0.8)"
+                                            keyboardType="email-address"
+                                            returnKeyType="go"
+                                            secureTextEntry={this.state.showPassword}
+                                            autoCorrect={false}
+                                            ref={input => (this.re_password = input)}
+                                            onChangeText={(re_password) => this.setState({ re_password })}
+                                            value={this.state.re_password}
+                                        />
+                                        <TouchableOpacity onPress={this.showPass.bind(this)} style={styles.btnEye} >
+                                            <Icon active name={'eye'} />
+                                        </TouchableOpacity>
+                                    </View>
 
-                                <TouchableOpacity style={styles.btnRegister} onPress={() => { this.validate() }}>
-                                    <Text style={styles.textButton}>Sign Up</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.signin}>
-                                <Text style={styles.text}>
-                                    Already have an account ?
+                                    <TouchableOpacity style={styles.btnRegister} onPress={() => { this.validate() }}>
+                                        <Text style={styles.textButton}>Sign Up</Text>
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={styles.signin}>
+                                    <Text style={styles.text}>
+                                        Already have an account ?
                                     <Text style={{ color: "blue" }} onPress={() => { navigate("Login") }}> Login </Text>
-                                </Text>
+                                    </Text>
+                                </View>
                             </View>
-                        </View>
-                    </TouchableWithoutFeedback>
-                </KeyboardAvoidingView>
-            </SafeAreaView>
+                        </TouchableWithoutFeedback>
+                    </KeyboardAvoidingView>
+                </SafeAreaView>
+            </ScrollView>
         );
     }
 }
