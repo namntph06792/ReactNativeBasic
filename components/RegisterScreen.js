@@ -13,9 +13,6 @@ import {
     TouchableOpacity,
 } from "react-native";
 import { Icon } from 'native-base';
-import {
-    showMessage,
-} from 'react-native-flash-message';
 import Logo from './Logo';
 import styles from '../src/styles';
 import { firebaseApp } from './FirebaseConfig';

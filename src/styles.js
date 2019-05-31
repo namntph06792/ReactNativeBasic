@@ -1,5 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native';
-const { width: winWidth, height: winHeight } = Dimensions.get('window');
+// const { width: winWidth, height: winHeight } = Dimensions.get('window');
 
 export default StyleSheet.create({
     //LoginScreen,RegisterScreen
@@ -135,17 +135,19 @@ export default StyleSheet.create({
     },
     listpost_btnGroup:{
         flexDirection: 'row',
-        justifyContent: 'center',
+        justifyContent: 'space-around',
         alignItems: 'center',
+        marginTop: 10,
     },
     listpost_btn:{
-        flex: 0.5,
+        flex: 0.4,
         alignItems: 'center',
         justifyContent: 'center',
         borderWidth: 1,
         borderRadius: 10,
         borderColor: 'blue',
         height: 35,
+        backgroundColor: '#00bfff',
     },
     //PostScreen
     post_container: {

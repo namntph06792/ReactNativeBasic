@@ -1,4 +1,5 @@
 import React from "react";
+import LoadingScreen from "./components/LoadingScreen";
 import LoginScreen from "./components/LoginScreen";
 import UserScreen from "./components/UserScreen";
 import RegisterScreen from "./components/RegisterScreen";
@@ -9,15 +10,20 @@ import SetCamera from "./components/SetCamera";
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 const MainNavigator = createStackNavigator({
-  Login: { screen: LoginScreen},
+  Loading: { screen: LoadingScreen},
+  Login: { screen: LoginScreen },
   User: { screen: UserScreen },
-  Register: { screen: RegisterScreen},
-  ListPost: { screen: ListPostScreen},
-  Post: { screen: PostScreen},
-  SetCamera: { screen: SetCamera}
+  Register: { screen: RegisterScreen },
+  ListPost: { screen: ListPostScreen },
+  Post: { screen: PostScreen },
+  SetCamera: { screen: SetCamera }
 });
 
-const App = createAppContainer(MainNavigator);
-export default App;
+const AppContainer = createAppContainer(MainNavigator);
+export default class App extends React.Component {
+  render() {
+    return <AppContainer/>;
+  }
+}
 
 
