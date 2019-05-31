@@ -1,6 +1,8 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+const { width: winWidth, height: winHeight } = Dimensions.get('window');
 
 export default StyleSheet.create({
+    //LoginScreen,RegisterScreen
     container: {
         flex: 1,
         flexDirection: "column",
@@ -91,6 +93,13 @@ export default StyleSheet.create({
         justifyContent: "center",
         width: "100%"
     },
+    btnEye: {
+        opacity: 0.5,
+        position: 'absolute',
+        top: 6,
+        right: 5
+    },
+    //Common
     error: {
         borderWidth: 3,
         borderColor: 'red',
@@ -119,11 +128,27 @@ export default StyleSheet.create({
         marginBottom: 10,
         borderRadius: 10,
     },
-    //LoginScreen
-    btnEye: {
-        opacity: 0.5,
-        position: 'absolute',
-        top: 6,
-        right: 5 
+    //ListPostScreen
+    listpost_container: {
+        flex: 1,
+        flexDirection: 'column',
+    },
+    listpost_btnGroup:{
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    listpost_btn:{
+        flex: 0.5,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 1,
+        borderRadius: 10,
+        borderColor: 'blue',
+        height: 35,
+    },
+    //PostScreen
+    post_container: {
+        flex: 1,
     }
 });

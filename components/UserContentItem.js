@@ -21,21 +21,21 @@ export default class UserContentItem extends Component {
             <Card style={styles.item}>
                 <CardItem>
                     <Left>
-                        <Thumbnail source={require('../assets/react-native.png')} />
+                        <Thumbnail source={{ uri: this.props.dat.wallpaper_image_thumb}} />
                         <Body>
-                            <Text>NativeBase</Text>
-                            <Text note>GeekyAnts</Text>
+                            <Text>{this.props.dat.category_name}</Text>
+                            <Text note>{this.props.dat.category_name}</Text>
                         </Body>
                     </Left>
                 </CardItem>
                 <CardItem cardBody>
-                    <Image source={{ uri: 'https://www.innofied.com/wp-content/uploads/2018/12/2018-12-06.jpg' }} style={{ height: 200, width: null, flex: 1 }} />
+                    <Image source={{ uri: this.props.dat.wallpaper_image }} style={{ height: 200, width: null, flex: 1 }} />
                 </CardItem>
                 <CardItem>
                     <Left>
                         <Button transparent>
                             <Icon active name="thumbs-up" />
-                            <Text>12 Likes</Text>
+                            <Text>{this.props.dat.total_views} Likes</Text>
                         </Button>
                     </Left>
                     <Body>
