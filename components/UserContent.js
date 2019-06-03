@@ -3,6 +3,7 @@ import { FlatList, ActivityIndicator } from 'react-native';
 import { Content } from "native-base";
 import UserContentHeader from "../components/UserContentHeader";
 import UserContentItem from "../components/UserContentItem";
+import { firebaseApp } from '../components/FirebaseConfig';
 
 export default class UserContent extends Component {
 
@@ -12,33 +13,58 @@ export default class UserContent extends Component {
             data: null,
             isLoading: true,
         }
+        thisState = this;
     }
 
-    componentDidMount(){
-        this.fetchJSON();
+    componentDidMount() {
+        this.readPostData();
     }
 
-    fetchJSON(){
-        fetch('http://www.tapetee.com/api.php?latest', {
-            method: 'GET',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            }
-        })
-            .then((response) => response.json())
-            .then((responseJson) => {
-
-                this.setState({
-                    isLoading: false,
-                    data: responseJson.HD_WALLPAPER
+    readPostData() {
+        firebaseApp.database().ref('posts/').on('value', function (snapshot) {
+            let array = [];
+            snapshot.forEach(function (childSnapshot) {
+                var childData = childSnapshot.val();
+                array.push({
+                    id: childSnapshot.key,
+                    title: childData.title,
+                    content: childData.content,
+                    like: childData.like,
+                    comment: childData.comment
                 });
-                return responseJson.HD_WALLPAPER;
+            });
+            thisState.setState({
+                isLoading: false,
+                data: array
             })
-            .catch((error) => {
-                console.error(error);
-            });	
+        });
     }
+
+    // componentDidMount(){
+    //     this.fetchJSON();
+    // }
+
+    // fetchJSON(){
+    //     fetch('http://www.tapetee.com/api.php?latest', {
+    //         method: 'GET',
+    //         headers: {
+    //             Accept: 'application/json',
+    //             'Content-Type': 'application/json',
+    //         }
+    //     })
+    //         .then((response) => response.json())
+    //         .then((responseJson) => {
+
+    //             this.setState({
+    //                 isLoading: false,
+    //                 data: responseJson.HD_WALLPAPER
+    //             });
+    //             return responseJson.HD_WALLPAPER;
+    //         })
+    //         .catch((error) => {
+    //             console.error(error);
+    //         });	
+    // }
 
     render() {
         if(this.state.isLoading){

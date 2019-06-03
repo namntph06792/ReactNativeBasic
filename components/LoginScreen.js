@@ -87,7 +87,7 @@ export default class LoginScreen extends React.Component {
         //     this.login();
         // }
         this.props.navigation.navigate("ListPost");
-        //this.props.navigation.navigate("User");
+        // this.props.navigation.navigate("User");
     }
 
     showPass = () => {

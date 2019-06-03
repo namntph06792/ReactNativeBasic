@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import styles from '../src/styles';
 import { firebaseApp } from '../components/FirebaseConfig';
+import ListPostItem from './ListPostItem';
 
 export default class ListPostScreen extends Component {
 
@@ -83,7 +84,7 @@ export default class ListPostScreen extends Component {
                 <FlatList
                     style={{flex:1}}
                     data={this.state.data}
-                    renderItem={({item}) => <Text>{item.title}</Text>}
+                    renderItem={({item}) => <ListPostItem dat={item}/>}
                     keyExtractor={(item,index) => item.id}
                 />
             </View>
