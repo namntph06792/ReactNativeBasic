@@ -159,7 +159,10 @@ export default StyleSheet.create({
         marginBottom: 10,
         borderRadius: 10,
         borderColor: '#d9e3f0',
-        paddingVertical: 10,
+        height: 75,
+    },
+    edit_post_container:{
+        flex: 0.5
     },
     //ListPostItem
     edit_post_container:{

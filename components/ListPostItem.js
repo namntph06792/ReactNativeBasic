@@ -23,20 +23,20 @@ export default class ListPostItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            visible: false,
             title: '',
             content: '',
             like: '',
             comment: '',
+            visible: false,
         }
     }
 
     updateData(title, content, like, comment) {
         firebaseApp.database().ref('posts/').set({
-            title: title,
-            content: content,
-            like: like,
-            comment: comment
+            title: this.state.title,
+            content: this.state.content,
+            like: this.state.like,
+            comment: this.state.comment
         }, function (error) {
             if (error) {
                 // The write failed...
@@ -46,10 +46,20 @@ export default class ListPostItem extends Component {
                 alert('Thanh cong!!!')
             }
         });
+        this.setState({
+            title: '',
+            content: '',
+            like: '',
+            comment: '',
+        });
     }
 
     deleteData(id) {
         firebaseApp.database().ref('posts/' + id).remove();
+    }
+
+    async hidePopup(){
+        await this.setState({visible:false});
     }
 
     editPost(){
@@ -67,7 +77,10 @@ export default class ListPostItem extends Component {
                 text: 'Edit',
                 backgroundColor: 'blue',
                 underlayColor: '#8ED1FC',
-                onPress: () => {this.setState({visible:true})}
+                onPress: () => {
+                    this.setState({
+                        visible:true
+                    })}
             },
             {
                 text: 'Delete',
@@ -99,11 +112,15 @@ export default class ListPostItem extends Component {
                         <DialogFooter>
                             <DialogButton
                                 text="CANCEL"
-                                onPress={() => { this.setState({ visible: false }); }}
+                                bordered
+                                onPress={() => { this.hidePopup()}}
+                                key = "button - 1"
                             />
                             <DialogButton
-                                text="OK"
-                                onPress={() => { }}
+                                text="SAVE"
+                                bordered
+                                onPress={() => { this.updateData()}}
+                                key = "button - 2"
                             />
                         </DialogFooter>
                     }
@@ -111,56 +128,55 @@ export default class ListPostItem extends Component {
                     <DialogContent>
                         <KeyboardAvoidingView behavior="padding" style={styles.edit_post_container}>
                             <TouchableWithoutFeedback
-                                style={styles.post_container}
+                                style={styles.edit_post_container}
                                 onPress={Keyboard.dismiss}>
                                 <View style={styles.loginInfo}>
                                     <TextInput
                                         style={styles.input}
                                         placeholder="Email address"
                                         placeholderTextColor="rgba(255,255,255,0.8)"
-                                        keyboardType="email-address"
+                                        keyboardType="default"
                                         returnKeyType="next"
                                         autoCorrect={false}
-                                        onSubmitEditing={() => this.password.focus()}
+                                        onSubmitEditing={() => this.content.focus()}
                                         onChangeText={(title) => this.setState({ title })}
-                                        value={this.state.title}
+                                        placeholder={this.props.dat.title}
                                     />
                                     <TextInput
                                         style={styles.input}
                                         placeholder="Email address"
                                         placeholderTextColor="rgba(255,255,255,0.8)"
-                                        keyboardType="email-address"
+                                        keyboardType="default"
                                         returnKeyType="next"
                                         autoCorrect={false}
-                                        onSubmitEditing={() => this.password.focus()}
+                                        ref={input => (this.content = input)}
+                                        onSubmitEditing={() => this.like.focus()}
                                         onChangeText={(content) => this.setState({ content })}
-                                        value={this.state.content}
+                                        placeholder={this.props.dat.content}
                                     />
                                     <TextInput
                                         style={styles.input}
                                         placeholder="Email address"
                                         placeholderTextColor="rgba(255,255,255,0.8)"
-                                        keyboardType="numeric"
+                                        keyboardType="numbers-and-punctuation"
                                         returnKeyType="next"
                                         autoCorrect={false}
-                                        onSubmitEditing={() => this.password.focus()}
+                                        ref={input => (this.like = input)}
+                                        onSubmitEditing={() => this.comment.focus()}
                                         onChangeText={(like) => this.setState({ like })}
-                                        value={this.state.like}
+                                        placeholder={this.props.dat.like}
                                     />
                                     <TextInput
                                         style={styles.input}
                                         placeholder="Email address"
                                         placeholderTextColor="rgba(255,255,255,0.8)"
-                                        keyboardType="numeric"
+                                        keyboardType="numbers-and-punctuation"
                                         returnKeyType="go"
                                         autoCorrect={false}
-                                        onSubmitEditing={() => this.password.focus()}
+                                        ref={input => (this.comment = input)}
                                         onChangeText={(comment) => this.setState({ comment })}
-                                        value={this.state.comment}
+                                        placeholder={this.props.dat.comment}
                                     />
-                                    <TouchableOpacity style={styles.btnSubmit} onPress={() => this.saveToFirebase()}>
-                                        <Text style={styles.textButtonSubmit}>Submit</Text>
-                                    </TouchableOpacity>
                                 </View>
                             </TouchableWithoutFeedback>
                         </KeyboardAvoidingView>
