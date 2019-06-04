@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
     TouchableHighlight,
-    TouchableOpacity,
     KeyboardAvoidingView,
     TouchableWithoutFeedback,
     TextInput,
@@ -23,6 +22,7 @@ export default class ListPostItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: '',
             title: '',
             content: '',
             like: '',
@@ -31,8 +31,8 @@ export default class ListPostItem extends Component {
         }
     }
 
-    updateData(title, content, like, comment) {
-        firebaseApp.database().ref('posts/').set({
+    updateData() {
+        firebaseApp.database().ref('posts/' + this.state.id).set({
             title: this.state.title,
             content: this.state.content,
             like: this.state.like,
@@ -51,6 +51,7 @@ export default class ListPostItem extends Component {
             content: '',
             like: '',
             comment: '',
+            visible: false,
         });
     }
 
@@ -60,10 +61,6 @@ export default class ListPostItem extends Component {
 
     async hidePopup(){
         await this.setState({visible:false});
-    }
-
-    editPost(){
-        
     }
 
     render() {
@@ -79,8 +76,14 @@ export default class ListPostItem extends Component {
                 underlayColor: '#8ED1FC',
                 onPress: () => {
                     this.setState({
+                        id: this.props.dat.id,
+                        title: this.props.dat.title,
+                        content: this.props.dat.content,
+                        like: this.props.dat.like,
+                        comment: this.props.dat.comment,
                         visible:true
-                    })}
+                    })},
+                style:{height:90}
             },
             {
                 text: 'Delete',
@@ -91,19 +94,26 @@ export default class ListPostItem extends Component {
         ]
         return (
             <View>
-                <Swipeout right={swipeButtonOptions} autoClose={true} backgroundColor='transparent'>
-                    <TouchableHighlight underlayColor='#8ED1FC'>
-                    <Card style={styles.post_item}>
-                        <CardItem cardBody>
-                            <Text>{this.props.dat.title}</Text>
-                        </CardItem>
-                        <CardItem cardBody>
-                            <Text note>{this.props.dat.content}</Text>
-                        </CardItem>
-                    </Card>
-                </TouchableHighlight>
+                <Swipeout 
+                    right={swipeButtonOptions} 
+                    autoClose={true} 
+                    backgroundColor='transparent'
+                    sensitivity={80}
+                    buttonWidth={65}
+                    >
+                    <TouchableHighlight underlayColor='#8ED1FC' >
+                        <Card style={styles.post_item}>
+                            <CardItem cardBody>
+                                <Text>{this.props.dat.title}</Text>
+                            </CardItem>
+                            <CardItem cardBody>
+                                <Text note>{this.props.dat.content}</Text>
+                            </CardItem>
+                        </Card>
+                    </TouchableHighlight>
                 </Swipeout>
                 <Dialog
+                    height={300}
                     visible={this.state.visible}
                     onTouchOutside={() => {this.setState({visible:false});}}
                     dialogTitle={<DialogTitle title='Edit post' />}
@@ -114,13 +124,11 @@ export default class ListPostItem extends Component {
                                 text="CANCEL"
                                 bordered
                                 onPress={() => { this.hidePopup()}}
-                                key = "button - 1"
                             />
                             <DialogButton
                                 text="SAVE"
                                 bordered
                                 onPress={() => { this.updateData()}}
-                                key = "button - 2"
                             />
                         </DialogFooter>
                     }
@@ -133,49 +141,49 @@ export default class ListPostItem extends Component {
                                 <View style={styles.loginInfo}>
                                     <TextInput
                                         style={styles.input}
-                                        placeholder="Email address"
-                                        placeholderTextColor="rgba(255,255,255,0.8)"
+                                        placeholder="Title"
+                                        placeholderTextColor="#d9e3f0"
                                         keyboardType="default"
                                         returnKeyType="next"
                                         autoCorrect={false}
                                         onSubmitEditing={() => this.content.focus()}
                                         onChangeText={(title) => this.setState({ title })}
-                                        placeholder={this.props.dat.title}
+                                        value={this.state.title}
                                     />
                                     <TextInput
                                         style={styles.input}
-                                        placeholder="Email address"
-                                        placeholderTextColor="rgba(255,255,255,0.8)"
+                                        placeholder="Content"
+                                        placeholderTextColor="#d9e3f0"
                                         keyboardType="default"
                                         returnKeyType="next"
                                         autoCorrect={false}
                                         ref={input => (this.content = input)}
                                         onSubmitEditing={() => this.like.focus()}
                                         onChangeText={(content) => this.setState({ content })}
-                                        placeholder={this.props.dat.content}
+                                        value={this.state.content}
                                     />
                                     <TextInput
                                         style={styles.input}
-                                        placeholder="Email address"
-                                        placeholderTextColor="rgba(255,255,255,0.8)"
+                                        placeholder="Like"
+                                        placeholderTextColor="#d9e3f0"
                                         keyboardType="numbers-and-punctuation"
                                         returnKeyType="next"
                                         autoCorrect={false}
                                         ref={input => (this.like = input)}
                                         onSubmitEditing={() => this.comment.focus()}
                                         onChangeText={(like) => this.setState({ like })}
-                                        placeholder={this.props.dat.like}
+                                        value={this.state.like}
                                     />
                                     <TextInput
                                         style={styles.input}
-                                        placeholder="Email address"
-                                        placeholderTextColor="rgba(255,255,255,0.8)"
+                                        placeholder="Comment"
+                                        placeholderTextColor="#d9e3f0"
                                         keyboardType="numbers-and-punctuation"
                                         returnKeyType="go"
                                         autoCorrect={false}
                                         ref={input => (this.comment = input)}
                                         onChangeText={(comment) => this.setState({ comment })}
-                                        placeholder={this.props.dat.comment}
+                                        value={this.state.comment}
                                     />
                                 </View>
                             </TouchableWithoutFeedback>

@@ -138,6 +138,7 @@ export default StyleSheet.create({
         justifyContent: 'space-around',
         alignItems: 'center',
         marginTop: 10,
+        marginBottom: 10,
     },
     listpost_btn:{
         flex: 0.4,
@@ -155,17 +156,13 @@ export default StyleSheet.create({
     },
     //ListPostItem
     post_item:{
-        marginTop: 0,
-        marginBottom: 10,
+        borderWidth: 1.5,
         borderRadius: 10,
         borderColor: '#d9e3f0',
-        height: 75,
+        height: 90,
+        justifyContent: 'center',
     },
     edit_post_container:{
-        flex: 0.5
-    },
-    //ListPostItem
-    edit_post_container:{
-        height: 400,
+        height: 250,
     },
 });

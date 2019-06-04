@@ -73,45 +73,47 @@ export default class PostScreen extends Component {
                         <View style={styles.loginInfo}>
                             <TextInput
                                 style={styles.input}
-                                placeholder="Email address"
-                                placeholderTextColor="rgba(255,255,255,0.8)"
-                                keyboardType="email-address"
+                                placeholder="Title"
+                                placeholderTextColor="#d9e3f0"
+                                keyboardType="default"
                                 returnKeyType="next"
                                 autoCorrect={false}
-                                onSubmitEditing={() => this.password.focus()}
+                                onSubmitEditing={() => this.content.focus()}
                                 onChangeText={(title) => this.setState({ title })}
                                 value={this.state.title}
                             />
                             <TextInput
                                 style={styles.input}
-                                placeholder="Email address"
-                                placeholderTextColor="rgba(255,255,255,0.8)"
-                                keyboardType="email-address"
+                                placeholder="Content"
+                                placeholderTextColor="#d9e3f0"
+                                keyboardType="default"
                                 returnKeyType="next"
                                 autoCorrect={false}
-                                onSubmitEditing={() => this.password.focus()}
+                                ref={input => (this.content = input)}
+                                onSubmitEditing={() => this.like.focus()}
                                 onChangeText={(content) => this.setState({ content })}
                                 value={this.state.content}
                             />
                             <TextInput
                                 style={styles.input}
-                                placeholder="Email address"
-                                placeholderTextColor="rgba(255,255,255,0.8)"
-                                keyboardType="numeric"
+                                placeholder="Like"
+                                placeholderTextColor="#d9e3f0"
+                                keyboardType="numbers-and-punctuation"
                                 returnKeyType="next"
                                 autoCorrect={false}
-                                onSubmitEditing={() => this.password.focus()}
+                                ref={input => (this.like = input)}
+                                onSubmitEditing={() => this.comment.focus()}
                                 onChangeText={(like) => this.setState({ like })}
                                 value={this.state.like}
                             />
                             <TextInput
                                 style={styles.input}
-                                placeholder="Email address"
-                                placeholderTextColor="rgba(255,255,255,0.8)"
-                                keyboardType="numeric"
+                                placeholder="Comment"
+                                placeholderTextColor="#d9e3f0"
+                                keyboardType="numbers-and-punctuation"
                                 returnKeyType="go"
                                 autoCorrect={false}
-                                onSubmitEditing={() => this.password.focus()}
+                                ref={input => (this.comment = input)}
                                 onChangeText={(comment) => this.setState({ comment })}
                                 value={this.state.comment}
                             />
