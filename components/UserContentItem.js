@@ -27,7 +27,7 @@ export default class UserContentItem extends Component {
 
     render() {
         return (
-            <Card style={styles.item}>
+            <Card style={styles.user_item}>
                 <CardItem>
                     <Left>
                         <Thumbnail source={require('../assets/react-native.png')} />

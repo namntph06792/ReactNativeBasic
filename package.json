@@ -14,7 +14,6 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
     "react-native-flash-message": "^0.1.13",
     "react-native-popup-dialog": "^0.18.2",
-    "react-native-slideshow": "^1.0.1",
     "react-native-swipeout": "^2.3.6",
     "react-navigation": "^3.11.0"
   },

@@ -9,7 +9,6 @@ import {
     Keyboard,
     Text,
 } from 'react-native';
-import Slideshow from 'react-native-slideshow';
 import styles from '../src/styles';
 import { firebaseApp } from '../components/FirebaseConfig';
 
@@ -23,29 +22,7 @@ export default class PostScreen extends Component {
             content: '',
             like: '',
             comment: '',
-            position: 1,
-            interval: null,
-            dataSource: [
-                { url: 'https://www.innofied.com/wp-content/uploads/2018/12/2018-12-06.jpg' },
-                { url: 'https://ideamotive.co/blog/wp-content/uploads/08-01-2019-State-Of-React-Native-At-The-Beginning-of-2019.png' },
-                { url: 'https://cdn-images-1.medium.com/max/2400/1*osBJxMiKxAkFnw-8aR5Sbg.png' },
-                { url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2Lvpxp1eamPUY0-ahlD2N2a-YBjO1Xuleak7bx74LyvIbxcGc' },
-            ]
         }
-    }
-
-    componentWillMount(){
-        this.setState({
-            interval: setInterval(() => {
-                this.setState({
-                    position: this.state.position === this.state.dataSource.length ? 0 : this.state.position + 1
-                });
-            },2000)
-        });
-    }
-
-    componentWillUnmount(){
-        clearInterval(this.state.interval);
     }
 
     static navigationOptions = {
@@ -89,11 +66,6 @@ export default class PostScreen extends Component {
         const { navigate } = this.props.navigation;
         return (
             <View style={styles.post_container}>
-                <Slideshow
-                    dataSource={this.state.dataSource}
-                    position={this.state.position}
-                    onPositionChanged={position => this.setState({position})}
-                />
                 <KeyboardAvoidingView behavior="padding" style={styles.post_container}>
                     <TouchableWithoutFeedback
                         style={styles.post_container}

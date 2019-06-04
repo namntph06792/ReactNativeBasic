@@ -123,7 +123,7 @@ export default StyleSheet.create({
         height: 20,
     },
     //UserContentItem
-    item: {
+    user_item: {
         marginTop: 0,
         marginBottom: 10,
         borderRadius: 10,
@@ -152,5 +152,17 @@ export default StyleSheet.create({
     //PostScreen
     post_container: {
         flex: 1,
-    }
+    },
+    //ListPostItem
+    post_item:{
+        marginTop: 0,
+        marginBottom: 10,
+        borderRadius: 10,
+        borderColor: '#d9e3f0',
+        paddingVertical: 10,
+    },
+    //ListPostItem
+    edit_post_container:{
+        height: 400,
+    },
 });

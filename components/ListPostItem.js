@@ -1,9 +1,18 @@
 import React, { Component } from 'react';
-import { TouchableHighlight } from 'react-native';
+import {
+    TouchableHighlight,
+    TouchableOpacity,
+    KeyboardAvoidingView,
+    TouchableWithoutFeedback,
+    TextInput,
+    Keyboard,
+} from 'react-native';
+import Dialog, { DialogFooter, DialogButton,SlideAnimation,DialogTitle,DialogContent} from 'react-native-popup-dialog';
 import {
     Card,
     CardItem,
     Text,
+    View,
 } from "native-base";
 import Swipeout from 'react-native-swipeout';
 import styles from '../src/styles';
@@ -13,6 +22,13 @@ export default class ListPostItem extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            visible: false,
+            title: '',
+            content: '',
+            like: '',
+            comment: '',
+        }
     }
 
     updateData(title, content, like, comment) {
@@ -36,13 +52,22 @@ export default class ListPostItem extends Component {
         firebaseApp.database().ref('posts/' + id).remove();
     }
 
+    editPost(){
+        
+    }
+
     render() {
+        const slideAnimation = new SlideAnimation({
+            initialValue: 0, // optional
+            slideFrom: 'bottom', // optional
+            useNativeDriver: true, // optional
+        })
         let swipeButtonOptions = [
             {
                 text: 'Edit',
                 backgroundColor: 'blue',
                 underlayColor: '#8ED1FC',
-                onPress: () => {this.editPost()}
+                onPress: () => {this.setState({visible:true})}
             },
             {
                 text: 'Delete',
@@ -52,9 +77,10 @@ export default class ListPostItem extends Component {
             }
         ]
         return (
-            <Swipeout right={swipeButtonOptions} autoClose={true} backgroundColor='transparent'>
-                <TouchableHighlight underlayColor='#8ED1FC'>
-                    <Card style={styles.item}>
+            <View>
+                <Swipeout right={swipeButtonOptions} autoClose={true} backgroundColor='transparent'>
+                    <TouchableHighlight underlayColor='#8ED1FC'>
+                    <Card style={styles.post_item}>
                         <CardItem cardBody>
                             <Text>{this.props.dat.title}</Text>
                         </CardItem>
@@ -63,7 +89,84 @@ export default class ListPostItem extends Component {
                         </CardItem>
                     </Card>
                 </TouchableHighlight>
-            </Swipeout>
+                </Swipeout>
+                <Dialog
+                    visible={this.state.visible}
+                    onTouchOutside={() => {this.setState({visible:false});}}
+                    dialogTitle={<DialogTitle title='Edit post' />}
+                    dialogAnimation={slideAnimation}
+                    footer={
+                        <DialogFooter>
+                            <DialogButton
+                                text="CANCEL"
+                                onPress={() => { this.setState({ visible: false }); }}
+                            />
+                            <DialogButton
+                                text="OK"
+                                onPress={() => { }}
+                            />
+                        </DialogFooter>
+                    }
+                    >
+                    <DialogContent>
+                        <KeyboardAvoidingView behavior="padding" style={styles.edit_post_container}>
+                            <TouchableWithoutFeedback
+                                style={styles.post_container}
+                                onPress={Keyboard.dismiss}>
+                                <View style={styles.loginInfo}>
+                                    <TextInput
+                                        style={styles.input}
+                                        placeholder="Email address"
+                                        placeholderTextColor="rgba(255,255,255,0.8)"
+                                        keyboardType="email-address"
+                                        returnKeyType="next"
+                                        autoCorrect={false}
+                                        onSubmitEditing={() => this.password.focus()}
+                                        onChangeText={(title) => this.setState({ title })}
+                                        value={this.state.title}
+                                    />
+                                    <TextInput
+                                        style={styles.input}
+                                        placeholder="Email address"
+                                        placeholderTextColor="rgba(255,255,255,0.8)"
+                                        keyboardType="email-address"
+                                        returnKeyType="next"
+                                        autoCorrect={false}
+                                        onSubmitEditing={() => this.password.focus()}
+                                        onChangeText={(content) => this.setState({ content })}
+                                        value={this.state.content}
+                                    />
+                                    <TextInput
+                                        style={styles.input}
+                                        placeholder="Email address"
+                                        placeholderTextColor="rgba(255,255,255,0.8)"
+                                        keyboardType="numeric"
+                                        returnKeyType="next"
+                                        autoCorrect={false}
+                                        onSubmitEditing={() => this.password.focus()}
+                                        onChangeText={(like) => this.setState({ like })}
+                                        value={this.state.like}
+                                    />
+                                    <TextInput
+                                        style={styles.input}
+                                        placeholder="Email address"
+                                        placeholderTextColor="rgba(255,255,255,0.8)"
+                                        keyboardType="numeric"
+                                        returnKeyType="go"
+                                        autoCorrect={false}
+                                        onSubmitEditing={() => this.password.focus()}
+                                        onChangeText={(comment) => this.setState({ comment })}
+                                        value={this.state.comment}
+                                    />
+                                    <TouchableOpacity style={styles.btnSubmit} onPress={() => this.saveToFirebase()}>
+                                        <Text style={styles.textButtonSubmit}>Submit</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </TouchableWithoutFeedback>
+                        </KeyboardAvoidingView>
+                    </DialogContent>
+                </Dialog>
+            </View>
         );
     }
 }
