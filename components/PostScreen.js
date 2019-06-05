@@ -38,6 +38,39 @@ export default class PostScreen extends Component {
         // header: null
     };
 
+    validatePost() {
+        space = /^\s*$/;
+        regP = /\d+/;
+        const { title, content, like, comment } = this.state;
+        if (space.test(title)) {
+            this.refs.post.showMessage({
+                message: 'Error',
+                description: 'Please input title !',
+                type: 'warning',
+            });
+        } else if (space.test(content)) {
+            this.refs.post.showMessage({
+                message: 'Error',
+                description: 'Please input content !',
+                type: 'warning',
+            });
+        } else if (space.test(like) || !regP.test(like)) {
+            this.refs.post.showMessage({
+                message: 'Error',
+                description: 'Please input like !',
+                type: 'warning',
+            });
+        } else if (space.test(comment) || !regP.test(comment)) {
+            this.refs.post.showMessage({
+                message: 'Error',
+                description: 'Please input comment !',
+                type: 'warning',
+            });
+        } else {
+            this.saveToFirebase();
+        }
+    }
+
     saveToFirebase(){
         firebaseApp.database().ref('posts/').push({
             title: this.state.title,
@@ -117,7 +150,7 @@ export default class PostScreen extends Component {
                                 onChangeText={(comment) => this.setState({ comment })}
                                 value={this.state.comment}
                             />
-                            <TouchableOpacity style={styles.btnSubmit} onPress={() => this.saveToFirebase()}>
+                            <TouchableOpacity style={styles.btnSubmit} onPress={() => this.validatePost()}>
                                 <Text style={styles.textButtonSubmit}>Submit</Text>
                             </TouchableOpacity>
                         </View>

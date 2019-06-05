@@ -60,7 +60,7 @@ export default class LoginScreen extends React.Component {
         }
     }
 
-    validate() {
+    validateLogin() {
         // space = /^\s*$/;
         // regE = /\w+@\w+(\.\w+){1,2}/;
         // regP = /\w{5,}/;
@@ -175,7 +175,7 @@ export default class LoginScreen extends React.Component {
                                         <Text>Remember me</Text>
                                     </View>
 
-                                    <TouchableOpacity style={styles.btnLogin} onPress={() => this.validate()}>
+                                    <TouchableOpacity style={styles.btnLogin} onPress={() => this.validateLogin()}>
                                         <Text style={styles.textButton}>Sign In</Text>
                                     </TouchableOpacity>
                                 </View>

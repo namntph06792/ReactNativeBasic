@@ -56,7 +56,7 @@ export default class RegisterScreen extends React.Component {
             });
     }
 
-    validate() {
+    validateRegister() {
         space = /^\s*$/;
         regE = /\w+@\w+(\.\w+){1,2}/;
         regP = /\w{5,}/;
@@ -183,7 +183,7 @@ export default class RegisterScreen extends React.Component {
                                         </TouchableOpacity>
                                     </View>
 
-                                    <TouchableOpacity style={styles.btnRegister} onPress={() => { this.validate() }}>
+                                    <TouchableOpacity style={styles.btnRegister} onPress={() => { this.validateRegister() }}>
                                         <Text style={styles.textButton}>Sign Up</Text>
                                     </TouchableOpacity>
                                 </View>

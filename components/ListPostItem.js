@@ -16,6 +16,7 @@ import {
 import Swipeout from 'react-native-swipeout';
 import styles from '../src/styles';
 import { firebaseApp } from '../components/FirebaseConfig';
+import FlashMessage from "react-native-flash-message"; ``
 
 export default class ListPostItem extends Component {
 
@@ -28,6 +29,39 @@ export default class ListPostItem extends Component {
             like: '',
             comment: '',
             visible: false,
+        }
+    }
+
+    validatePost(){
+        space = /^\s*$/;
+        regP = /\d+/;
+        const { title, content, like, comment } = this.state;
+        if (space.test(title)) {
+            this.refs.post.showMessage({
+                message: 'Error',
+                description: 'Please input title !',
+                type: 'warning',
+            });
+        } else if (space.test(content)) {
+            this.refs.post.showMessage({
+                message: 'Error',
+                description: 'Please input content !',
+                type: 'warning',
+            });
+        } else if (space.test(like) || !regP.test(like)) {
+            this.refs.post.showMessage({
+                message: 'Error',
+                description: 'Please input like !',
+                type: 'warning',
+            });
+        } else if (space.test(comment) || !regP.test(comment)) {
+            this.refs.post.showMessage({
+                message: 'Error',
+                description: 'Please input comment !',
+                type: 'warning',
+            });
+        } else {
+            this.updateData();
         }
     }
 
@@ -94,6 +128,7 @@ export default class ListPostItem extends Component {
         ]
         return (
             <View>
+                <FlashMessage ref='login' position='top' hideOnPress={true} autoHide={false} animated={true} />
                 <Swipeout 
                     right={swipeButtonOptions} 
                     autoClose={true} 
@@ -128,7 +163,7 @@ export default class ListPostItem extends Component {
                             <DialogButton
                                 text="SAVE"
                                 bordered
-                                onPress={() => { this.updateData()}}
+                                onPress={() => { this.validatePost()}}
                             />
                         </DialogFooter>
                     }
