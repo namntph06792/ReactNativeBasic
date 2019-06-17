@@ -128,7 +128,7 @@ export default class ListPostItem extends Component {
         ]
         return (
             <View>
-                <FlashMessage ref='login' position='top' hideOnPress={true} autoHide={false} animated={true} />
+                <FlashMessage ref='post' duration={1500} position='center' hideOnPress={true} autoHide={true} animated={true} />
                 <Swipeout 
                     right={swipeButtonOptions} 
                     autoClose={true} 
@@ -148,7 +148,7 @@ export default class ListPostItem extends Component {
                     </TouchableHighlight>
                 </Swipeout>
                 <Dialog
-                    height={300}
+                    height={370}
                     visible={this.state.visible}
                     onTouchOutside={() => {this.setState({visible:false});}}
                     dialogTitle={<DialogTitle title='Edit post' />}
